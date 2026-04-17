@@ -1,0 +1,39 @@
+category:
+  name:
+    not_blank: "The category name is required."
+    min: "The category name must contain at least {{ limit }} characters."
+    max: "The category name cannot exceed {{ limit }} characters."
+    unique: "This category already exists."
+
+  slug:
+    not_blank: "The slug is required."
+    min: "The slug must contain at least {{ limit }} characters."
+    max: "The slug cannot exceed {{ limit }} characters."
+    invalid: "The slug may only contain lowercase letters, numbers, and hyphens."
+    unique: "This slug is already used."
+
+  description:
+    max: "The description cannot exceed {{ limit }} characters."
+
+post:
+  title:
+    not_blank: "The title is required."
+    min: "The title must contain at least {{ limit }} characters."
+    max: "The title cannot exceed {{ limit }} characters."
+
+  slug:
+    not_blank: "The slug is required."
+    min: "The slug must contain at least {{ limit }} characters."
+    max: "The slug cannot exceed {{ limit }} characters."
+    invalid: "The slug may only contain lowercase letters, numbers, and hyphens."
+    unique: "This slug is already used."
+
+  content:
+    not_blank: "The content is required."
+    min: "The content must contain at least {{ limit }} characters."
+
+  category:
+    not_null: "The category is required."
+
+  author:
+    not_null: "The author is required."    

@@ -1,0 +1,23 @@
+sign_in:
+    remember_me: Se souvenir de moi
+
+category:
+  fields:
+    name: "Nom"
+    slug: "Slug"
+    description: "Description"
+
+post:
+  fields:
+    title: "Titre"
+    slug: "Slug"
+    content: "Contenu"
+    category: "Catégorie"
+    created_at: "Date de création"
+    updated_at: "Date de modification"
+
+  placeholders:
+    title: "Ex : Symfony et API Platform"
+    slug: "ex : symfony-et-api-platform"
+    content: "Saisissez le contenu du post"
+    category: "Choisissez une catégorie"    

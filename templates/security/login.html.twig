@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% set page_title = ('global.sign_in'|trans({}, 'main')) %}
+
+{% block title %}{{ page_title }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1 class="h3 mb-4 font-weight-normal">{{ page_title }}</h1>
+
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ logout_path() }}">{{ 'global.logout'|trans({}, 'main') }}</a>
+            </div>
+        {% endif %}
+
+        <div class="row mb-3">
+             <label for="username" class="col-sm-2 col-form-label">{{ 'global.email'|trans({}, 'main') }}</label>
+            <div class="col-sm-10">
+                   <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
+            </div> 
+        </div> 
+        
+        <div class="row mb-3">
+             <label for="password" class="col-sm-2 col-form-label">{{ 'global.password'|trans({}, 'main') }}</label>
+            <div class="col-sm-10">
+                <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+            </div> 
+        </div> 
+
+        <div class="row mb-3">
+            <div class="col-sm-10 offset-sm-2">
+                <div class="form-check">
+                    <input type="checkbox" name="_remember_me" id="_remember_me" class="form-check-input">
+                    <label for="_remember_me" class="form-check-label">{{ 'secu_remember_me'|trans({}, 'security') }}</label>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+        <nav class="d-flex justify-content-center gap-2">
+            <button class="btn btn-success" type="submit">{{ 'global.sign_in'|trans({}, 'main') }}</button>
+
+            <a href="{{ path('app_forgot_password_request') }}" class="btn btn-dark">{{ 'secu_password_lost'|trans({}, 'security') }}</a>
+                
+            <a href="{{ path('app_register') }}" class="btn btn-dark">{{ 'global.register'|trans({}, 'main') }}</a> 
+        </nav>
+	</form>
+{% endblock %}

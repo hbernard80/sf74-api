@@ -1,0 +1,20 @@
+category:
+  fields:
+    name: "Name"
+    slug: "Slug"
+    description: "Description"
+
+post:
+  fields:
+    title: "Title"
+    slug: "Slug"
+    content: "Content"
+    category: "Category"
+    created_at: "Created at"
+    updated_at: "Updated at"
+
+  placeholders:
+    title: "e.g. Symfony and API Platform"
+    slug: "e.g. symfony-and-api-platform"
+    content: "Enter the post content"
+    category: "Choose a category"

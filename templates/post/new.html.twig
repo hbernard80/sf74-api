@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% set page_title =
+    ('action.create'|trans({}, 'main')|capitalize)
+    ~ ' '
+    ~ ('action.one'|trans({}, 'main'))
+    ~ ' '
+    ~ ('feature.post'|trans({'%count%': 1}, 'main'))
+%}
+
+{% block title %}{{ page_title }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1 class="border-bottom mb-4">{{ page_title }}</h1>
+
+    {{ include('post/_form.html.twig') }}
+
+    <a href="{{ path('app_post_index') }}" class="btn btn-dark" aria-label="{{ 'action.back_to_list'|trans({}, 'main')|capitalize }}">
+        <i class="bi bi-chevron-compact-left" aria-hidden="true"></i>
+        <span class="ms-1">
+            {{ 'action.back_to_list'|trans({}, 'main')|capitalize }}
+        </span>
+    </a>
+{% endblock %}

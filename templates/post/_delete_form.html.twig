@@ -1,0 +1,10 @@
+<form method="post" action="{{ path('app_post_delete', {'id': post.id}) }}"  onsubmit="return confirm('{{ 'action.delete_confirm'|trans({}, 'main') }}');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
+    <button class="btn btn-danger"
+        aria-label="{{ 'action.delete'|trans({}, 'main') }}">
+    <i class="bi bi-trash" aria-hidden="true"></i>
+    <span class="ms-1">
+        {{ 'action.delete'|trans({}, 'main')|capitalize }}
+    </span>
+</button>
+</form>

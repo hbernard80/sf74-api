@@ -1,0 +1,42 @@
+global:
+    action: "{0} actions|{1} actions|]1,Inf] actions"    
+    email: Adresse mail   
+    firstname: Prénom
+    home: Accueil
+    it_works: Ca marche !
+    lastname: Nom
+    logout: Déconnexion
+    password: Mot de passe
+    password_repeat: Répétez le mot de passe
+    register: Créer un compte
+    sign_in: Connexion
+action:
+    action: "{0} action|{1} action|]1,Inf] actions"    
+    back_to_list: retour liste
+    create: ajouter
+    date_created_at: Créé le
+    date_updated_at: Modifié le
+    delete: supprimer
+    delete_confirm: Etes-vous sûr(e) de vouloir supprimer cet élément ?
+    edit: modifier
+    id: id
+    one: un
+    no_record: aucun enregistrement
+    save: ajouter
+    show: voir
+feature:
+    category: "{0} catégorie|{1} catégorie|]1,Inf] catégories"       
+    post: "{0} article|{1} article|]1,Inf] articles"
+    product: "{0} produit|{1} produit|]1,Inf] produits"
+pagerfanta.previous: Précédent
+pagerfanta.next: Suivant            
+user:
+    is_active: compte actif   
+    is_verified: mail vérifié   
+    my_account: mon compte
+    profile: profil
+    profile_me: profil
+    role: "{0} rôle|{1} rôle|]1,Inf] rôles"    
+    role_user: "{0} utilisateur|{1} utilisateur|]1,Inf] utilisateurs"
+    role_admin: "{0} administrateur|{1} administrateur|]1,Inf] administrateurs"    
+    role_author: "{0} auteur|{1} auteur|]1,Inf] auteurs"

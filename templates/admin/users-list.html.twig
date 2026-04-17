@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% set page_title = ('user.role_user'|trans({'%count%': users|length}, 'main'))|capitalize %}
+
+{% block title %}{{ page_title }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1 class="border-bottom mb-4">{{ page_title }}</h1>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>{{ 'global.lastname'|trans({}, 'main')|upper }} {{ 'global.firstname'|trans({}, 'main')|capitalize }}</th>
+                    <th>{{ 'global.email'|trans({}, 'main')|capitalize }}</th>
+                    <th>{{ 'user.role'|trans({'%count%': 2}, 'main')|capitalize }}</th>
+                    <th>{{ 'user.is_active'|trans({}, 'main')|capitalize }}</th>                    
+                </tr>
+            </thead>
+            <tbody>
+            {% for u in users %}
+                <tr>
+                    <td><a href="{{ path('app_admin_user_show', { ulid: u.ulid }) }}">{{ u.lastname|upper }} {{ u.firstname|capitalize }}</a></td>
+                    <td>{% if u.isVerified %}✅{% else %}❌{% endif %} {{ u.email }}</td>
+                    <td>{{ u.roles|map(role => ('role.' ~ role)|trans({}, 'security'))|join(', ')|capitalize }}</td>
+                    <td class="text-center">{% if u.isActive %}✅{% else %}⛔{% endif %}</td>                    
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">{{ 'user.no_record'|trans({}, 'main')|capitalize }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {# barre de pagination avec styles Bootstrap #} 
+    <nav class="d-flex justify-content-center">
+        <ul class="pagination">
+            {% for page in 1..users.nbPages %}
+                <li class="page-item {{ page == users.currentPage ? 'active' }}"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+{% endblock %}

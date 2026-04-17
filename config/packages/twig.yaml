@@ -1,0 +1,8 @@
+twig:
+    file_name_pattern: '*.twig'
+    form_themes: ['bootstrap_5_horizontal_layout.html.twig']   
+    globals:
+        html_lang_map: '%html_lang_map%' 
+when@test:
+    twig:
+        strict_variables: true
