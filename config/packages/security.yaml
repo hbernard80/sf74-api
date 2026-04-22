@@ -12,6 +12,13 @@ security:
                 property: email
                 
     firewalls:
+        api:
+            pattern: ^/api
+            security: false
+            stateless: true
+            # authenticator API ici si besoin
+            # jwt: ~
+            # custom_authenticators: [...]
         dev:
             # Ensure dev tools and static assets are always allowed
             pattern: ^/(_profiler|_wdt|assets|build)/

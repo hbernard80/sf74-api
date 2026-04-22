@@ -1,15 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 trait Timestampable
 {
     #[ORM\Column]
+    #[Groups(['post:read', 'category:read', 'user:read'])]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column]
+    #[Groups(['post:read', 'category:read', 'user:read'])]
     private ?\DateTimeImmutable $updated_at = null;
 
     #[ORM\PrePersist]
@@ -32,11 +37,13 @@ trait Timestampable
         $this->updated_at = new \DateTimeImmutable();
     }
 
+    #[Groups(['post:read', 'category:read', 'user:read'])]
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
 
+    #[Groups(['post:read', 'category:read', 'user:read'])]
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updated_at;

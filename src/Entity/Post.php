@@ -4,17 +4,41 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Entity\Traits\Timestampable;
 use App\Repository\PostRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Attributes\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['post:read']],
+    denormalizationContext: ['groups' => ['post:write']],
+    order: ['createdAt' => 'DESC'],
+    paginationItemsPerPage: 10,
+    paginationMaximumItemsPerPage: 50,
+    paginationClientItemsPerPage: true
+)]
+#[ApiFilter(SearchFilter::class, properties: [
+    'title' => 'partial',
+    'slug' => 'partial',
+    'category.id' => 'exact',
+    'author.id' => 'exact',
+])]
+#[ApiFilter(OrderFilter::class, properties: [
+    'id',
+    'title',
+    'slug',
+    'createdAt',
+    'updatedAt',
+], arguments: ['orderParameterName' => 'order'])]
 #[UniqueEntity(
     fields: ['slug'],
     message: 'post.slug.unique'
@@ -26,6 +50,7 @@ class Post
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['post:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -36,6 +61,7 @@ class Post
         minMessage: 'post.title.min',
         maxMessage: 'post.title.max'
     )]
+    #[Groups(['post:read', 'post:write'])]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, unique: true)]
@@ -50,6 +76,7 @@ class Post
         pattern: '/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
         message: 'post.slug.invalid'
     )]
+    #[Groups(['post:read', 'post:write'])]
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -58,16 +85,19 @@ class Post
         min: 10,
         minMessage: 'post.content.min'
     )]
+    #[Groups(['post:read', 'post:write'])]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'post.category.not_null')]
+    #[Groups(['post:read', 'post:write'])]
     private ?Category $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'post.author.not_null')]
+    #[Groups(['post:read'])]
     private ?User $author = null;
 
     public function getId(): ?int

@@ -6,7 +6,14 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="none">
         <meta name="referrer" content="no-referrer">
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        
+        <link rel="icon" type="image/png" href="{{ asset('favicon-96x96.png') }}" sizes="96x96">
+        <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+        <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+        
+
         {% block stylesheets %}
         {% endblock %}
 
@@ -31,8 +38,8 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('app_post_index') }}">{{ 'feature.post'|trans({'%count%': 2}, 'main')|capitalize }}</a>
                             </li>
-
-                              {% if is_granted('ROLE_ADMIN') %}
+						
+         						{% if is_granted('ROLE_ADMIN') %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ path('app_admin_user_index') }}">{{ 'user.role_user'|trans({'%count%': 2}, 'main')|capitalize }}</a>
                                 </li>     
@@ -40,6 +47,20 @@
                                     <a class="nav-link" href="{{ path('app_category_index') }}">{{ 'feature.category'|trans({'%count%': 2}, 'main')|capitalize }}</a>
                                 </li>     
                             {% endif %}            
+                            
+							<li class="nav-item">
+								<a class="nav-link"
+								   href="{{ path('api_entrypoint') }}"
+								   target="_blank"
+								   rel="noopener noreferrer">
+								   
+									{{ 'api.documentation'|trans({}, 'main')|capitalize }}
+									{{ 'api.api'|trans({}, 'main') }}
+									<span class="visually-hidden">
+										({{ 'global.opens_new_tab'|trans({}, 'main') }})
+									</span>
+								</a>
+							</li>
 
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('app_user_profile_show') }}">{{ 'user.my_account'|trans({}, 'main')|capitalize }}</a>
