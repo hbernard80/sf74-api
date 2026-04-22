@@ -6,10 +6,12 @@ global:
     it_works: Ca marche !
     lastname: Nom
     logout: Déconnexion
+    opens_new_tab: "ouvre dans un nouvel onglet"
     password: Mot de passe
     password_repeat: Répétez le mot de passe
     register: Créer un compte
     sign_in: Connexion
+    welcome: bienvenue
 action:
     action: "{0} action|{1} action|]1,Inf] actions"    
     back_to_list: retour liste
@@ -24,6 +26,9 @@ action:
     no_record: aucun enregistrement
     save: ajouter
     show: voir
+api:
+    api: API    
+    documentation: Documentation    
 feature:
     category: "{0} catégorie|{1} catégorie|]1,Inf] catégories"       
     post: "{0} article|{1} article|]1,Inf] articles"

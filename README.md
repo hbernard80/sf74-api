@@ -11,7 +11,7 @@ Projet de démo d'une exposition d'<abbr title="Application Programming Interfac
 * PHP 8.5.0
 * MySQL 8.0.43 
 
-## Etat actuel 
+## Etat actuel (Done)
 
 * Installation et configuration de Symfony + API Platform
 * Gestion des utilisateurs (mail de vérification, rôles, User Checker etc.)
@@ -47,3 +47,22 @@ Projet de démo d'une exposition d'<abbr title="Application Programming Interfac
   * Pagination
   * Sécurisation/authentification API
   * Frontend appel API (techno à définir).
+
+<hr>
+
+# Utilisation
+
+> URL de la documentation de l'API : http://localhost:8000/api.
+  
+## Obtenir la Liste des articles 
+
+* Request URL : _https://127.0.0.1:8000/api/posts?page=1&itemsPerPage=10&order%5Bid%5D=asc&order%5Btitle%5D=asc&order%5Bslug%5D=asc_ (page1, 10 par page, ordre ascendant)
+* Commande cURL (syntaxe Windows + serveur local Symfony) : 
+
+```bash
+curl -k "https://127.0.0.1:8000/api/posts?page=1&itemsPerPage=10&order%5Bid%5D=asc&order%5Btitle%5D=asc&order%5Bslug%5D=asc" -H "accept: application/ld+json"
+```
+
+## Obtenir l'article 1
+ 
+ * Request URL : __.
