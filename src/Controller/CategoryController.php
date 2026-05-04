@@ -10,16 +10,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Exception\NotValidCurrentPageException;
+use Pagerfanta\Pagerfanta;
 
 #[Route('/category')]
 final class CategoryController extends AbstractController
 {
     #[Route('', name: 'app_category_index', methods: ['GET'])]
-    public function index(CategoryRepository $categoryRepository): Response
+    public function index(Request $request, CategoryRepository $categoryRepository): Response
     {
-        return $this->render('category/index.html.twig', [
-            'categories' => $categoryRepository->findAll(),
-        ]);
+        $page = max(1, $request->query->getInt('page', 1));
+
+        $queryBuilder = $categoryRepository->createListQueryBuilder();
+
+        $pager = new Pagerfanta(new QueryAdapter($queryBuilder));
+
+        $pager->setMaxPerPage(10);
+
+        try {
+            $pager->setCurrentPage($page);
+        } catch (NotValidCurrentPageException) {
+            throw $this->createNotFoundException('Page invalide.');
+        }
+
+        return $this->render('category/index.html.twig', ['pager' => $pager]);
     }
 
     #[Route('/new', name: 'app_category_new', methods: ['GET', 'POST'])]

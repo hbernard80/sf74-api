@@ -1,13 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Category{% endblock %}
+{% set page_title =
+    ('action.edit'|trans({}, 'main')|capitalize)
+    ~ ' '
+    ~ ('action.one'|trans({}, 'main'))
+    ~ ' '
+    ~ ('feature.category'|trans({'%count%': 1}, 'main'))
+%}
+
+{% block title %}{{ page_title }} - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1 class="border-bottom mb-4">Edit Category</h1>
+    <h1 class="border-bottom mb-4">{{ page_title }}</h1>
 
-    {{ include('category/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_category_index') }}">back to list</a>
-
-    {{ include('category/_delete_form.html.twig') }}
+    {{ include('category/_form.html.twig', {
+        button_label: 'action.edit',
+        post: category,
+        show_delete: true
+    }) }}
 {% endblock %}

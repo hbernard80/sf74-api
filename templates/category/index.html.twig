@@ -1,39 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% set page_title = ('feature.category'|trans({'%count%': 2}, 'main'))|capitalize %}
+
+{% block title %}{{ page_title }} - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1 class="border-bottom mb-4">Category index</h1>
+    <h1 class="border-bottom mb-4">{{ page_title }}</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Slug</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for category in categories %}
-            <tr>
-                <td>{{ category.id }}</td>
-                <td>{{ category.name }}</td>
-                <td>{{ category.slug }}</td>
-                <td>{{ category.description }}</td>
-                <td>
-                    <a href="{{ path('app_category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('app_category_edit', {'id': category.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
+     <div class="mb-4">
+     {% if pager|length > 0 %}
+           <div class="btn btn-dark">{{ pager|length }} {{ page_title|lower }}</div>
+        {% endif %}
+    
+        <a href="{{ path('app_category_new') }}" class="btn btn-success" aria-label="{{ 'action.create'|trans({}, 'main')|capitalize }}">
+        <i class="bi bi-plus-circle" aria-hidden="true"></i>
+        <span class="ms-1">{{ 'action.create'|trans({}, 'main')|capitalize }}</span>
+        </a>    
+    </div>
+
+    {% if pager|length > 0 %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>{{ 'action.id'|trans({}, 'main')|capitalize }}</th>
+                        <th>{{ 'title'|trans({}, 'post')|capitalize }}</th>
+                        <th>Slug</th>
+                        <th>{{ 'action.action'|trans({'%count%': 2}, 'main')|capitalize }}</th>
+                    </tr>     
+                </thead>
+                <tbody>
+                {% for c in pager %}
+                    <tr>
+                        <td>{{ c.id }}</td>
+                        <td><a href="{{ path('app_category_show', {'id': c.id}) }}">{{ c.name }}</a></td>
+                        <td>{{ c.slug }}</td>                     
+                        <td class="text-center">
+                            <a href="{{ path('app_category_edit', {'id': c.id}) }}" 
+                                aria-label="{{ 'action.edit'|trans({}, 'main')|capitalize }}" 
+                                title="{{ 'action.edit'|trans({}, 'main')|capitalize }}">
+                                <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                            </a>
+                        </td>       
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>       
+
+        <nav class="d-flex justify-content-center mt-4" aria-label="Pagination">{{ pagerfanta(pager, { omitFirstPage: true, translation_domain: 'main' }) }}</nav>
+    {% else %}
+        <div class="alert alert-warning">{{ 'action.no_record'|trans({}, 'main')|capitalize }}.</div>
+    {% endif %}
     </table>
-
-    <a href="{{ path('app_category_new') }}">Create new</a>
 {% endblock %}
