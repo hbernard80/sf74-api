@@ -19,7 +19,21 @@ class PostType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
+        $post = $options['data'];
+
+        // Champ Id uniquement si formulaire de modif
+        if ($post && null !== $post->getId() ) 
+        {
+            $builder->add('id', TextType::class, [
+                'label' => 'global.id',
+                'translation_domain' => 'forms',
+                'disabled' => true,
+                'mapped' => false,
+                'data' => $post->getId(),
+            ]);
+        }
+
+         $builder
              ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',

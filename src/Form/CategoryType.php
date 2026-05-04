@@ -13,7 +13,20 @@ class CategoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
+        $category = $options['data'];
+
+        // Champ Id uniquement si formulaire de modif
+        if ($category && null !== $category->getId()) {
+            $builder->add('id', TextType::class, [
+                'label' => 'global.id',
+                'translation_domain' => 'forms',
+                'disabled' => true,
+                'mapped' => false,
+                'data' => $category->getId(),
+            ]);
+        }
+
+        $builder           
            ->add('name', TextType::class, [
                 'label' => 'category.fields.name',
                 'translation_domain' => 'forms',

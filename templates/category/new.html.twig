@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Category{% endblock %}
+{% set page_title =
+    ('action.create'|trans({}, 'main')|capitalize)
+    ~ ' '
+    ~ ('action.one_f'|trans({}, 'main'))
+    ~ ' '
+    ~ ('feature.category'|trans({'%count%': 1}, 'main'))
+%}
+
+{% block title %}{{ page_title }} - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1 class="border-bottom mb-4">Create new Category</h1>
+    <h1 class="border-bottom mb-4">{{ page_title }}</h1>
 
     {{ include('category/_form.html.twig') }}
 
-    <a href="{{ path('app_category_index') }}">back to list</a>
 {% endblock %}

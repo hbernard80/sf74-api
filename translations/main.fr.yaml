@@ -14,18 +14,20 @@ global:
     welcome: bienvenue
 action:
     action: "{0} action|{1} action|]1,Inf] actions"    
-    back_to_list: retour liste
-    create: ajouter
+    back_to_list: Retour liste
+    create: Ajouter
     date_created_at: Créé le
     date_updated_at: Modifié le
-    delete: supprimer
+    delete: Supprimer
     delete_confirm: Etes-vous sûr(e) de vouloir supprimer cet élément ?
-    edit: modifier
+    edit: Modifier
     id: id
     one: un
+    one_f: une
     no_record: aucun enregistrement
-    save: ajouter
-    show: voir
+    save: Ajouter
+    show: Voir
+    update: Modifier
 api:
     api: API    
     documentation: Documentation    

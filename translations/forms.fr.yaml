@@ -1,11 +1,14 @@
+global: 
+     id: Id
+
 sign_in:
     remember_me: Se souvenir de moi
 
 category:
   fields:
-    name: "Nom"
-    slug: "Slug"
-    description: "Description"
+    name: Nom
+    slug: Slug
+    description: Description
 
 post:
   fields:
