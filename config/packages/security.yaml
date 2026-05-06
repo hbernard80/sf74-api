@@ -51,10 +51,56 @@ security:
 
     # Note: Only the *first* matching rule is applied
     access_control:
-        - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/post, roles: ROLE_USER }
+        #- { path: ^/profile, roles: ROLE_USER }
+        #- { path: ^/post, roles: ROLE_USER }
+        #- { path: ^/admin, roles: ROLE_ADMIN }
+        #- { path: ^/category, roles: ROLE_ADMIN }
+       
+        #
+        # API publique
+        #
+
+        # Swagger / API docs
+        - { path: ^/api/v1/docs, roles: PUBLIC_ACCESS }
+        - { path: ^/api/v1/docs.jsonld, roles: PUBLIC_ACCESS }
+
+        # Lecture publique de l'API
+        - { path: ^/api/v1/posts, roles: PUBLIC_ACCESS, methods: [GET] }
+        - { path: ^/api/v1/categories, roles: PUBLIC_ACCESS, methods: [GET] }
+
+        #
+        # API authentifiée
+        #
+
+        # Création/modification/suppression d'articles
+        - { path: ^/api/v1/posts, roles: ROLE_AUTHOR, methods: [POST, PATCH, PUT, DELETE] }
+
+        # Gestion catégories API
+        - { path: ^/api/v1/categories, roles: ROLE_ADMIN, methods: [POST, PATCH, PUT, DELETE] }
+
+        # Gestion utilisateurs API
+        - { path: ^/api/v1/users, roles: ROLE_ADMIN }
+
+        #
+        # Back-office
+        #
+
+        # Administration globale
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/category, roles: ROLE_ADMIN }
+
+        # Zone auteur
+        - { path: ^/author, roles: ROLE_AUTHOR }
+
+        #
+        # Profil utilisateur
+        #
+        - { path: ^/profile, roles: ROLE_USER }
+
+        #
+        # Login / logout
+        #
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/logout, roles: PUBLIC_ACCESS }
 when@test:
     security:
         password_hashers:
