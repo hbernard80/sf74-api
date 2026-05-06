@@ -1,5 +1,6 @@
 api_platform:
-    title: Hello API Platform
+    title: SF74
+    description: API Symfony/API Platform
     version: 1.0.0
     defaults:
         stateless: true
