@@ -42,7 +42,7 @@ final class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/{id<\d+>}', name: 'app_post_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_post_show', requirements: ['id' => '\\d+'], methods: ['GET'])]
     public function show(int $id, PostRepository $postRepository): Response
     {
         $post = $postRepository->find($id);
@@ -86,7 +86,7 @@ final class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/{id<\d+>}/edit', name: 'app_post_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_post_edit', requirements: ['id' => '\\d+'], methods: ['GET', 'POST'])]
     public function edit(
         int $id,
         Request $request,
@@ -124,7 +124,7 @@ final class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/{id<\d+>}', name: 'app_post_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_post_delete', requirements: ['id' => '\\d+'], methods: ['POST'])]
     public function delete(
         int $id,
         Request $request,

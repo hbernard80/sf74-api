@@ -57,7 +57,7 @@ final class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id<\d+>}', name: 'app_category_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_category_show', requirements: ['id' => '\\d+'], methods: ['GET'])]
     public function show(int $id, CategoryRepository $categoryRepository): Response
     {
         $category = $categoryRepository->find($id);
@@ -71,7 +71,7 @@ final class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id<\d+>}/edit', name: 'app_category_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_category_edit', requirements: ['id' => '\\d+'], methods: ['GET', 'POST'])]
     public function edit(
         int $id,
         Request $request,
@@ -99,7 +99,7 @@ final class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id<\d+>}', name: 'app_category_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_category_delete', requirements: ['id' => '\\d+'], methods: ['POST'])]
     public function delete(
         int $id,
         Request $request,
