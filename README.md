@@ -52,15 +52,15 @@ Projet de démo d'une exposition d'<abbr title="Application Programming Interfac
 
 # Utilisation
 
-> URL de la documentation de l'API : http://localhost:8000/api.
+> URL de la documentation de l'API : http://localhost:8000/api/v1/.
   
 ## Obtenir la Liste des articles 
 
-* Request URL : _https://127.0.0.1:8000/api/posts?page=1&itemsPerPage=10&order%5Bid%5D=asc&order%5Btitle%5D=asc&order%5Bslug%5D=asc_ (page1, 10 par page, ordre ascendant)
+* Request URL : _https://127.0.0.1:8000/api/v1/posts?page=1&itemsPerPage=10&order%5Bid%5D=asc&order%5Btitle%5D=asc&order%5Bslug%5D=asc_ (page1, 10 par page, ordre ascendant)
 * Commande cURL (syntaxe Windows + serveur local Symfony) : 
 
 ```bash
-curl -k "https://127.0.0.1:8000/api/posts?page=1&itemsPerPage=10&order%5Bid%5D=asc&order%5Btitle%5D=asc&order%5Bslug%5D=asc" -H "accept: application/ld+json"
+curl -k "https://127.0.0.1:8000/api/v1/posts?page=1&itemsPerPage=10&order%5Bid%5D=asc&order%5Btitle%5D=asc&order%5Bslug%5D=asc" -H "accept: application/ld+json"
 ```
 
 ## Obtenir l'article 1
