@@ -31,6 +31,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     'slug' => 'partial',
     'category.id' => 'exact',
     'author.id' => 'exact',
+    'publicationStatus' => 'exact',
 ])]
 #[ApiFilter(OrderFilter::class, properties: [
     'id',
@@ -38,6 +39,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     'slug',
     'createdAt',
     'updatedAt',
+    'publicationStatus',
 ], arguments: ['orderParameterName' => 'order'])]
 #[UniqueEntity(
     fields: ['slug'],
@@ -88,6 +90,10 @@ class Post
     #[Groups(['post:read', 'post:write'])]
     private ?string $content = null;
 
+    #[ORM\Column(enumType: PostPublicationStatus::class)]
+    #[Groups(['post:read', 'post:write'])]
+    private PostPublicationStatus $publicationStatus = PostPublicationStatus::DRAFT;
+
     #[ORM\ManyToOne(inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'post.category.not_null')]
@@ -137,6 +143,18 @@ class Post
     public function setContent(string $content): static
     {
         $this->content = trim($content);
+
+        return $this;
+    }
+
+    public function getPublicationStatus(): PostPublicationStatus
+    {
+        return $this->publicationStatus;
+    }
+
+    public function setPublicationStatus(PostPublicationStatus $publicationStatus): static
+    {
+        $this->publicationStatus = $publicationStatus;
 
         return $this;
     }

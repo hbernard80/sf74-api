@@ -6,9 +6,11 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Post;
+use App\Entity\PostPublicationStatus;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -72,6 +74,16 @@ class PostType extends AbstractType
                 'attr' => [
                     'rows' => 10,
                     'placeholder' => 'post.placeholders.content',
+                ],
+            ])
+
+            ->add('publicationStatus', ChoiceType::class, [
+                'label' => 'post.fields.publication_status',
+                'translation_domain' => 'forms',
+                'choices' => [
+                    'post.publication_status.draft' => PostPublicationStatus::DRAFT,
+                    'post.publication_status.to_validate' => PostPublicationStatus::TO_VALIDATE,
+                    'post.publication_status.published' => PostPublicationStatus::PUBLISHED,
                 ],
             ])
 

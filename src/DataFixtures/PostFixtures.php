@@ -7,6 +7,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Post;
+use App\Entity\PostPublicationStatus;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -45,6 +46,7 @@ final class PostFixtures extends Fixture implements DependentFixtureInterface
             $post->setTitle($title);
             $post->setSlug($this->slugger->slug($title)->lower()->toString());
             $post->setContent($faker->paragraphs(3, true));
+            $post->setPublicationStatus(PostPublicationStatus::DRAFT);
             $post->setCreatedAt($createdAt);
             $post->setUpdatedAt($updatedAt);
             $post->setCategory($category);

@@ -27,6 +27,10 @@
                 <td>{{ post.content }}</td>
             </tr>
             <tr>
+                <th>{{ 'publication_status.label'|trans({}, 'post')|capitalize }}</th>
+                <td>{{ ('publication_status.' ~ post.publicationStatus.value)|trans({}, 'post')|capitalize }}</td>
+            </tr>
+            <tr>
                 <th><i class="bi bi-person-fill"></i> {{ 'user.role_author'|trans({'%count%': 1}, 'main')|capitalize }}</th>
                 <td>{{ post.author.firstname|capitalize }} {{ post.author.lastname|upper }}</td>
             </tr>

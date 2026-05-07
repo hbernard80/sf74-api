@@ -16,8 +16,14 @@ post:
     slug: "Slug"
     content: "Contenu"
     category: "Catégorie"
+    publication_status: "Statut de publication"
     created_at: "Date de création"
     updated_at: "Date de modification"
+
+  publication_status:
+    draft: "Brouillon"
+    to_validate: "À valider"
+    published: "Publié"
 
   placeholders:
     title: "Ex : Symfony et API Platform"
