@@ -1,3 +1,9 @@
 content: contenu
 slug: slug
 title: titre
+
+publication_status:
+  label: statut de publication
+  draft: brouillon
+  published: publié
+  to_validate: à valider
