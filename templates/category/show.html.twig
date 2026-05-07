@@ -31,12 +31,14 @@
     </div>
 
  <nav class="d-flex justify-content-center mt-4 gap-2" aria-label="Actions">
+    {% if is_granted('ROLE_ADMIN') %}
        <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="btn btn-success" aria-label="{{ 'action.edit'|trans({}, 'main')|capitalize }}">
-        <i class="bi bi-pencil-square" aria-hidden="true"></i>
-        <span class="ms-1">
-            {{ 'action.edit'|trans({}, 'main')|capitalize }}
-        </span>
-    </a>
+            <i class="bi bi-pencil-square" aria-hidden="true"></i>
+            <span class="ms-1">
+                {{ 'action.edit'|trans({}, 'main')|capitalize }}
+            </span>
+        </a>
+    {% endif %}
 
     <a href="{{ path('app_category_index') }}" class="btn btn-dark" aria-label="{{ 'action.back_to_list'|trans({}, 'main')|capitalize }}">
         <i class="bi bi-chevron-compact-left" aria-hidden="true"></i>

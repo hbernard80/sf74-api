@@ -10,19 +10,21 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
-                
+
+    role_hierarchy:
+        ROLE_AUTHOR: ROLE_USER
+        ROLE_ADMIN: [ROLE_AUTHOR, ROLE_USER]
+
     firewalls:
-        api:
-            pattern: ^/api
-            security: false
-            stateless: true
-            # authenticator API ici si besoin
-            # jwt: ~
-            # custom_authenticators: [...]
         dev:
             # Ensure dev tools and static assets are always allowed
             pattern: ^/(_profiler|_wdt|assets|build)/
             security: false
+        api:
+            pattern: ^/api
+            stateless: true
+            provider: app_user_provider
+            http_basic: ~
         main:
             lazy: true
             provider: app_user_provider
@@ -31,7 +33,7 @@ security:
                 check_path: app_login
                 enable_csrf: true
                 # route de redirection après connexion
-                default_target_path: app_main                
+                default_target_path: app_main
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -39,10 +41,10 @@ security:
             remember_me:
                     secret: '%kernel.secret%'
                     lifetime: 604800 # 1 semaine en secondes
-                    # always_remember_me: true # pour toujours activer sans case à cocher    
-            # Compte actif ? 
+                    # always_remember_me: true # pour toujours activer sans case à cocher
+            # Compte actif ?
             user_checker: App\Security\UserChecker
-            
+
             # Activate different ways to authenticate:
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -51,22 +53,18 @@ security:
 
     # Note: Only the *first* matching rule is applied
     access_control:
-        #- { path: ^/profile, roles: ROLE_USER }
-        #- { path: ^/post, roles: ROLE_USER }
-        #- { path: ^/admin, roles: ROLE_ADMIN }
-        #- { path: ^/category, roles: ROLE_ADMIN }
-       
         #
         # API publique
         #
 
         # Swagger / API docs
+        - { path: ^/api/v1/?$, roles: PUBLIC_ACCESS }
         - { path: ^/api/v1/docs, roles: PUBLIC_ACCESS }
         - { path: ^/api/v1/docs.jsonld, roles: PUBLIC_ACCESS }
 
         # Lecture publique de l'API
-        - { path: ^/api/v1/posts, roles: PUBLIC_ACCESS, methods: [GET] }
-        - { path: ^/api/v1/categories, roles: PUBLIC_ACCESS, methods: [GET] }
+        - { path: ^/api/v1/posts(?:/|$), roles: PUBLIC_ACCESS, methods: [GET] }
+        - { path: ^/api/v1/categories(?:/|$), roles: PUBLIC_ACCESS, methods: [GET] }
 
         #
         # API authentifiée
@@ -79,7 +77,10 @@ security:
         - { path: ^/api/v1/categories, roles: ROLE_ADMIN, methods: [POST, PATCH, PUT, DELETE] }
 
         # Gestion utilisateurs API
-        - { path: ^/api/v1/users, roles: ROLE_ADMIN }
+        - { path: ^/api/v1/users(?:/|$), roles: ROLE_ADMIN }
+
+        # Toute autre route API est privée par défaut
+        - { path: ^/api, roles: ROLE_ADMIN }
 
         #
         # Back-office
@@ -88,13 +89,24 @@ security:
         # Administration globale
         - { path: ^/admin, roles: ROLE_ADMIN }
 
-        # Zone auteur
-        - { path: ^/author, roles: ROLE_AUTHOR }
+        # Lecture publique des contenus web
+        - { path: ^/post(?:/\d+)?$, roles: PUBLIC_ACCESS, methods: [GET] }
+        - { path: ^/category(?:/\d+)?$, roles: PUBLIC_ACCESS, methods: [GET] }
+
+        # Écriture des articles web
+        - { path: ^/post/new$, roles: ROLE_AUTHOR }
+        - { path: ^/post/\d+/edit$, roles: ROLE_AUTHOR }
+        - { path: ^/post/\d+$, roles: ROLE_AUTHOR, methods: [POST] }
+
+        # Administration des catégories web
+        - { path: ^/category/new$, roles: ROLE_ADMIN }
+        - { path: ^/category/\d+/edit$, roles: ROLE_ADMIN }
+        - { path: ^/category/\d+$, roles: ROLE_ADMIN, methods: [POST] }
 
         #
         # Profil utilisateur
         #
-        - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/user/profile$, roles: ROLE_USER }
 
         #
         # Login / logout
